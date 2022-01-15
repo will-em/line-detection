@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/hough-transform/static/css/main.073c9b0a.css",
+    "main.js": "/hough-transform/static/js/main.8def9ca5.js",
+    "static/js/787.2e801615.chunk.js": "/hough-transform/static/js/787.2e801615.chunk.js",
+    "static/media/logo.svg": "/hough-transform/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/hough-transform/index.html",
+    "main.073c9b0a.css.map": "/hough-transform/static/css/main.073c9b0a.css.map",
+    "main.8def9ca5.js.map": "/hough-transform/static/js/main.8def9ca5.js.map",
+    "787.2e801615.chunk.js.map": "/hough-transform/static/js/787.2e801615.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.8def9ca5.js"
+  ]
+}
