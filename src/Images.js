@@ -3,13 +3,13 @@ import court from './Images/tennis_court.jpeg';
 import {print} from './Test';
 
 function Images() {
-  return (
-      <div className='Images'>
-        <img id="image" src={court} alt="Tennis court"/>
-        <button onClick={print}> Test </button>
-        <canvas id="canvas" width={640} height={425} />
-      </div>
-  );
+
+    return (
+        <div className='Images'>
+            <canvas id="canvas" width={800} height={800} />
+            <button  onClick={print}> Test </button>
+        </div>
+    );
 }
 
 export default Images;
