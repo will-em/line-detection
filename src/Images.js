@@ -5,8 +5,9 @@ import {print} from './Test';
 function Images() {
   return (
       <div className='Images'>
-        <img src={court} />
+        <img id="image" src={court} alt="Tennis court"/>
         <button onClick={print}> Test </button>
+        <canvas id="canvas" width={640} height={425} />
       </div>
   );
 }
