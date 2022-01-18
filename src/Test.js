@@ -12,5 +12,8 @@ export const print = () => {
     }
 
     // now we can draw our imagedata onto the canvas
-    ctx.putImageData(imgData, 0, 0);
+    //ctx.putImageData(imgData, 0, 0);
+    var img = new Image();
+    ctx.drawImage(img, 0, 0);
+    img.src = '/Images/tennis_court.jpeg';
 }
