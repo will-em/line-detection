@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react';
+import {convolve2d} from './Convolution';
 
 function Canvas() {
 
-    const [image, setImage] = useState(null)
+    const [image, setImage] = useState(null);
+    const [convolvedImage, setConvolvedImage] = useState(null);
     const canvasRef = useRef(null);
 
     useEffect(() => {
@@ -17,7 +19,6 @@ function Canvas() {
         var imageObj = new Image();
         imageObj.src = 'https://i.stack.imgur.com/NlLrx.jpg'; 
         imageObj.onload = () => setImage(imageObj);
-
     }, [])
 
     useEffect(() => {
@@ -27,6 +28,12 @@ function Canvas() {
        if(image && canvas){
            const ctx = canvas.getContext('2d');
            ctx.drawImage(image, 0, 0, canvas.width/2, canvas.height/2);
+
+           const testArr = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+           const testKernal = [[1, 2], [3, 4]];
+
+           console.log(convolve2d(testKernal, testArr))
+           
 
        } 
     }, [image])

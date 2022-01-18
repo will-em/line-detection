@@ -6,7 +6,7 @@ function uniform_array(len, value) {
     return arr;
 }
 
-function conv_2d(kernel, array){
+export function convolve2d(kernel, array){
     var result = uniform_array(array.length, uniform_array(array[0].length, 0));
     var kRows = kernel.length;
     var kCols = kernel[0].length;
