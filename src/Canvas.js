@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {convolve2d} from './Convolution';
+import {image_to_grayscale, grayscale_arr_to_image} from './HelperFunctions'
 
 function Canvas() {
 
@@ -17,7 +18,7 @@ function Canvas() {
 
 
         var imageObj = new Image();
-        imageObj.src = 'https://i.stack.imgur.com/NlLrx.jpg'; 
+        imageObj.src = require('./Images/tennis_court.jpeg'); 
         imageObj.onload = () => setImage(imageObj);
     }, [])
 
@@ -25,16 +26,30 @@ function Canvas() {
         const canvas = canvasRef.current;
         console.log(image);
         console.log(canvas);
-       if(image && canvas){
-           const ctx = canvas.getContext('2d');
-           ctx.drawImage(image, 0, 0, canvas.width/2, canvas.height/2);
+        if(image && canvas){
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(image, 0, 0, canvas.width/2, canvas.height/2);
 
-           const testArr = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
-           const testKernal = [[1, 2], [3, 4]];
+            /* TEST convolve2d FUNCTION
+            const testArr = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+            const testKernal = [[1, 2], [3, 4]];
 
-           console.log(convolve2d(testKernal, testArr))
-           
+            console.log(convolve2d(testKernal, testArr))
+            */
+            /*
+            let grayscaleData = ctx.createImageData(canvas.width/2, canvas.height/2);
+            let imageData = ctx.getImageData(0, 0, canvas.width/2, canvas.height/2);
+            let data = imageData.data;
+            grayscaleData.data = grayscale_to_RGBA(RGBA_to_grayscale(data));
+            ctx.putImageData(grayscaleData, canvas.width/2, canvas.height/2)
+            */
 
+            let imageData = ctx.getImageData(0, 0, canvas.width/2, canvas.height/2);
+            let grayscaleArr = image_to_grayscale(imageData); 
+            console.log(imageData.data)
+            grayscale_arr_to_image(grayscaleArr, imageData)
+            console.log(imageData.data)
+            ctx.putImageData(imageData, canvas.width/2, canvas.height/2)
        } 
     }, [image])
 
