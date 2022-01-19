@@ -1,4 +1,4 @@
-export const image_to_grayscale = (ImageData) => { // Neglecting alpha
+export const image_to_grayscale = (ImageData) => { // Neglecting transparency 
     let grayArr = new Array(ImageData.width*ImageData.height);
     let j = 0;
     for(let i=0; i<grayArr.length; i++){
@@ -15,7 +15,7 @@ export const grayscale_arr_to_image = (arr, ImageData) => {
         ImageData.data[j] = arr[i];
         ImageData.data[j + 1] = arr[i];
         ImageData.data[j + 2] = arr[i];
-        ImageData.data[j + 3] = 255;
+        ImageData.data[j + 3] = 255; // Full transparency 
         j+=4;
     }
 }
