@@ -36,12 +36,13 @@ export const flatten = (arr) => {
     let height = arr.length;
     let width = arr[0].length;
 
-    console.log(width*height)
+    console.log(height)
+    console.log(width)
     let flat = new Array(width*height);
 
     for(let i=0; i<height; i++){
         for(let j=0; j<width; j++){
-            flat[i*height + j] = arr[i, j];
+            flat[i*height + j] = arr[i][j];
         }
     }
 
@@ -58,11 +59,12 @@ export const norm256 = (arr) => {
         if(temp_max>max)
             max = temp_max;
     }
+    console.log(arr[10][1])
     if(max!=255){
 
         for(let i=0; i<height; i++){
             for(let j=0; j<width; j++){
-                arr[i, j] = Math.floor(255 * arr[i, j] / max);
+                arr[i][j] = Math.floor(255 * arr[i][j] / max);
             }
         }
     }

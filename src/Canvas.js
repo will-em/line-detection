@@ -32,15 +32,18 @@ function Canvas() {
             let imageData = ctx.getImageData(0, 0, canvas.width/2, canvas.height/2);
             let grayscaleArr = image_to_grayscale(imageData); 
 
-            //grayscaleArr = flatten(norm256(array_to_mat(grayscaleArr, imageData.height, imageData.width)));
 
-            grayscale_arr_to_image(grayscaleArr, imageData)
+            let mat = array_to_mat([...grayscaleArr], imageData.height, imageData.width);
+            //const kernel = [[0.5, 0.5, 0.5], [0.5, 0.5, 0.5], [0.5, 0.5, 0.5]];
+            const kernel = [[1]];
+            //let filteredImage = mat;
+            let filteredImage = convolve2d(kernel, mat);
+            norm256(filteredImage); 
+            let filteredImageArr = flatten(filteredImage);
+            grayscale_arr_to_image(filteredImageArr, imageData)
+            
+            //grayscale_arr_to_image(grayscaleArr, imageData)
             ctx.putImageData(imageData, canvas.width/2, canvas.height/2)
-
-            let mat = array_to_mat(grayscaleArr, imageData.height, imageData.width);
-            const kernel = [[1, 1, 1], [1, 2, 1], [1, 1, 1]];
-
-
 
        } 
     }, [image])
