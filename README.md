@@ -1,5 +1,8 @@
-# Hough transform
+# Line detection algorithm running in browser
 
+All Image-processing is implemented from scratch using JavaScript arrays and HTML canvas. React is used for state management. 
+
+## See progress so far: will-em.github.io/hough-transform/
 
 ## Todo
 1. Fetch image data from URL, solve cross-origin issues
