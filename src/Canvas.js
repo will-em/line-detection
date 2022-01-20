@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {convolve2d} from './Convolution';
-import {image_to_grayscale, grayscale_arr_to_image, array_to_mat, flatten, norm256, magnitude} from './HelperFunctions'
+import {image_to_grayscale, grayscale_arr_to_image, array_to_mat, flatten, norm256, magnitude, thresholding} from './HelperFunctions'
 
 function Canvas() {
 
@@ -43,6 +43,7 @@ function Canvas() {
             let G = magnitude(G_x, G_y) 
             
             norm256(G); 
+            thresholding(G, 0); 
             let filteredImageArr = flatten(G);
             grayscale_arr_to_image(filteredImageArr, imageData)
             

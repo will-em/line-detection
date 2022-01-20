@@ -66,7 +66,8 @@ export const norm256 = (arr) => {
         }
     }
 }
-        
+
+// Compute the magnitude of G from its components for each pixel
 export const magnitude = (G_x, G_y) => {
     let height = G_x.length;
     let width = G_y[0].length;
@@ -80,5 +81,18 @@ export const magnitude = (G_x, G_y) => {
     }
 
     return G;
+}
+
+// Thresholding
+export const thresholding = (arr, threshold) => {
+    let height = arr.length;
+    let width = arr[0].length;
+
+    for(let i=0; i<height; i++){
+        for(let j=0; j<width; j++){
+            if(arr[i][j] < threshold)
+                arr[i][j] = 0;
+        }
+    }
 }
     
