@@ -24,7 +24,7 @@ export const grayscale_arr_to_image = (arr, ImageData) => {
 
 
 // Reshape array to 2D-array
-export const array_to_mat = (arr, height, width) => {
+export const array_to_mat = (arr, width) => {
     let mat = [];
     while(arr.length)
         mat.push(arr.splice(0, width))
@@ -36,13 +36,11 @@ export const flatten = (arr) => {
     let height = arr.length;
     let width = arr[0].length;
 
-    console.log(height)
-    console.log(width)
     let flat = new Array(width*height);
 
-    for(let i=0; i<height; i++){
-        for(let j=0; j<width; j++){
-            flat[i*height + j] = arr[i][j];
+    for(let i=0; i<width; i++){
+        for(let j=0; j<height; j++){
+            flat[i + j*width] = arr[j][i];
         }
     }
 
@@ -59,7 +57,6 @@ export const norm256 = (arr) => {
         if(temp_max>max)
             max = temp_max;
     }
-    console.log(arr[10][1])
     if(max!=255){
 
         for(let i=0; i<height; i++){

@@ -18,7 +18,7 @@ function Canvas() {
 
 
         var imageObj = new Image();
-        imageObj.src = require('./Images/tennis_court.jpeg'); 
+        imageObj.src = require('./Images/parrot.jpeg'); 
         imageObj.onload = () => setImage(imageObj);
     }, [])
 
@@ -33,9 +33,10 @@ function Canvas() {
             let grayscaleArr = image_to_grayscale(imageData); 
 
 
-            let mat = array_to_mat([...grayscaleArr], imageData.height, imageData.width);
-            //const kernel = [[0.5, 0.5, 0.5], [0.5, 0.5, 0.5], [0.5, 0.5, 0.5]];
-            const kernel = [[1]];
+            let mat = array_to_mat([...grayscaleArr], imageData.width);
+            //let test = array_to_mat([1, 2, 3, 4, 5, 6], 2, 2);
+            const kernel = [[0.5, 0.5, 0.5], [0.5, 0.5, 0.5], [0.5, 0.5, 0.5]];
+            //const kernel = [[1]];
             //let filteredImage = mat;
             let filteredImage = convolve2d(kernel, mat);
             norm256(filteredImage); 
