@@ -57,7 +57,7 @@ export const norm256 = (arr) => {
         if(temp_max>max)
             max = temp_max;
     }
-    if(max!=255){
+    if(max!==255){
 
         for(let i=0; i<height; i++){
             for(let j=0; j<width; j++){
@@ -65,8 +65,20 @@ export const norm256 = (arr) => {
             }
         }
     }
-        
-
-    
-
 }
+        
+export const magnitude = (G_x, G_y) => {
+    let height = G_x.length;
+    let width = G_y[0].length;
+
+    let G = [...G_x];
+
+    for(let i=0; i<height; i++){
+        for(let j=0; j<width; j++){
+            G[i][j] = Math.sqrt(G_x[i][j] * G_x[i][j] + G_y[i][j] * G_y[i][j])
+        }
+    }
+
+    return G;
+}
+    

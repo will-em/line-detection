@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {convolve2d} from './Convolution';
-import {image_to_grayscale, grayscale_arr_to_image, array_to_mat, flatten, norm256} from './HelperFunctions'
+import {image_to_grayscale, grayscale_arr_to_image, array_to_mat, flatten, norm256, magnitude} from './HelperFunctions'
 
 function Canvas() {
 
@@ -18,7 +18,7 @@ function Canvas() {
 
 
         var imageObj = new Image();
-        imageObj.src = require('./Images/parrot.jpeg'); 
+        imageObj.src = require('./Images/stockholm.jpeg'); 
         imageObj.onload = () => setImage(imageObj);
     }, [])
 
@@ -33,18 +33,20 @@ function Canvas() {
             let grayscaleArr = image_to_grayscale(imageData); 
 
 
-            let mat = array_to_mat([...grayscaleArr], imageData.width);
-            //let test = array_to_mat([1, 2, 3, 4, 5, 6], 2, 2);
-            const kernel = [[0.5, 0.5, 0.5], [0.5, 0.5, 0.5], [0.5, 0.5, 0.5]];
-            //const kernel = [[1]];
-            //let filteredImage = mat;
-            let filteredImage = convolve2d(kernel, mat);
-            norm256(filteredImage); 
-            let filteredImageArr = flatten(filteredImage);
+            let mat_x = array_to_mat([...grayscaleArr], imageData.width);
+            let mat_y = array_to_mat([...grayscaleArr], imageData.width);
+            const kernel_x = [[1, 0, -1], [2, 0, -2], [1, 0, -1]];
+            const kernel_y = [[1, 2, 1], [0, 0, 0], [-1, -2, -1]];
+            let G_x = convolve2d(kernel_x, mat_x);
+            let G_y = convolve2d(kernel_y, mat_y);
+
+            let G = magnitude(G_x, G_y) 
+            
+            norm256(G); 
+            let filteredImageArr = flatten(G);
             grayscale_arr_to_image(filteredImageArr, imageData)
             
-            //grayscale_arr_to_image(grayscaleArr, imageData)
-            ctx.putImageData(imageData, canvas.width/2, canvas.height/2)
+            ctx.putImageData(imageData, canvas.width/2, 0)
 
        } 
     }, [image])
