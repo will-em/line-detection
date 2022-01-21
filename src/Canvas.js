@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {convolve2d} from './Convolution';
-import {image_to_grayscale, grayscale_arr_to_image, array_to_mat, flatten, norm256, magnitude, thresholding} from './HelperFunctions'
+import {image_to_grayscale, grayscale_arr_to_image, array_to_mat, flatten, norm256, magnitude, thresholding, transpose} from './HelperFunctions'
 import {gaussianKernel} from './GaussianBlur';
 
 function Canvas() {
@@ -35,13 +35,12 @@ function Canvas() {
 
 
             // Blurring
+            const kernelSize = 5;
             let mat = array_to_mat([...grayscaleArr], imageData.width);
-            let gKernel = gaussianKernel(10, 5);
-            let gx = [gKernel[2]];
-            let gy = [[gKernel[0][2]], [gKernel[1][2]], [gKernel[2][2]], [gKernel[3][2]], [gKernel[4][2]]]
+            let gx= gaussianKernel(1, 5);
+            let gy = transpose(gx);
             console.time("Blur")
-            //mat = convolve2d(gKernel, mat);
-            mat = convolve2d(gx, mat);
+            mat = convolve2d([gx], mat);
             mat = convolve2d(gy, mat);
 
             console.timeEnd("Blur")

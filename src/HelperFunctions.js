@@ -96,3 +96,14 @@ export const thresholding = (arr, threshold) => {
     }
 }
 
+// Transpose
+export const transpose = (arr) => {
+    const arrCopy = [...arr];
+    const transposed = new Array(arrCopy.length);
+
+    for(let i=0; i<arrCopy.length; i++)
+        transposed[i] = [arrCopy[i]];
+
+    return transposed;
+}
+
