@@ -9,6 +9,5 @@ export const gaussianKernel = (t, size) => {
             kernel[i][j] = gaussian(-size + i +1 , -size + j + 1, t);
         }
     }
-    console.log(kernel)
     return kernel;
 }
