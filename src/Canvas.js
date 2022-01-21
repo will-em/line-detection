@@ -36,9 +36,15 @@ function Canvas() {
 
             // Blurring
             let mat = array_to_mat([...grayscaleArr], imageData.width);
-            let gKernel = gaussianKernel(10, 6);
-            mat = convolve2d(gKernel, mat);
+            let gKernel = gaussianKernel(10, 5);
+            let gx = [gKernel[2]];
+            let gy = [[gKernel[0][2]], [gKernel[1][2]], [gKernel[2][2]], [gKernel[3][2]], [gKernel[4][2]]]
+            console.time("Blur")
+            //mat = convolve2d(gKernel, mat);
+            mat = convolve2d(gx, mat);
+            mat = convolve2d(gy, mat);
 
+            console.timeEnd("Blur")
             // Edge detection
             const kernel_x = [[1, 0, -1], [2, 0, -2], [1, 0, -1]];
             const kernel_y = [[1, 2, 1], [0, 0, 0], [-1, -2, -1]];
