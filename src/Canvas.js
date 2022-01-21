@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {convolve2d} from './Convolution';
 import {image_to_grayscale, grayscale_arr_to_image, array_to_mat, flatten, norm256, magnitude, thresholding} from './HelperFunctions'
+import {gaussianKernel} from './GaussianBlur';
 
 function Canvas() {
 
@@ -33,16 +34,23 @@ function Canvas() {
             let grayscaleArr = image_to_grayscale(imageData); 
 
 
-            let mat_x = array_to_mat([...grayscaleArr], imageData.width);
-            let mat_y = array_to_mat([...grayscaleArr], imageData.width);
+            // Blurring
+            let mat = array_to_mat([...grayscaleArr], imageData.width);
+            let gKernel = gaussianKernel(10, 6);
+            mat = convolve2d(gKernel, mat);
+
+            // Edge detection
             const kernel_x = [[1, 0, -1], [2, 0, -2], [1, 0, -1]];
             const kernel_y = [[1, 2, 1], [0, 0, 0], [-1, -2, -1]];
-            let G_x = convolve2d(kernel_x, mat_x);
-            let G_y = convolve2d(kernel_y, mat_y);
+            let G_x = convolve2d(kernel_x, mat);
+            let G_y = convolve2d(kernel_y, mat);
 
             let G = magnitude(G_x, G_y) 
-            
+           
+            // Normalizing 
             norm256(G); 
+
+            // Thresholding
             thresholding(G, 0); 
             let filteredImageArr = flatten(G);
             grayscale_arr_to_image(filteredImageArr, imageData)
