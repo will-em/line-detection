@@ -9,10 +9,12 @@ function Canvas() {
     const [convolvedImage, setConvolvedImage] = useState(null);
     const canvasRef = useRef(null);
 
+    const scaleFactor = 0.95;
+
     useEffect(() => {
         const canvas = canvasRef.current;
         canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        canvas.height = window.innerHeight * scaleFactor;
         
         //canvas.style.width = `${window.innerWidth}px`;
         //canvas.style.height = `${window.innerHeight}px`;
@@ -37,10 +39,12 @@ function Canvas() {
             // Blurring
             const kernelSize = 5;
             let mat = array_to_mat([...grayscaleArr], imageData.width);
-            let gx= gaussianKernel(1, 5);
+            let gx= gaussianKernel(1, 11);
             let gy = transpose(gx);
+            console.log(gx);
+            console.log(gy);
             console.time("Blur")
-            mat = convolve2d([gx], mat);
+            mat = convolve2d(gx, mat);
             mat = convolve2d(gy, mat);
 
             console.timeEnd("Blur")

@@ -8,5 +8,5 @@ export const gaussianKernel = (t, size) => {
     for(let i=0; i<size; i++){
             kernel[i] = gaussian(-Math.floor(size/2) + i , 0, t);
     }
-    return kernel;
+    return [kernel];
 }

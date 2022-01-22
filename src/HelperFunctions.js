@@ -96,13 +96,12 @@ export const thresholding = (arr, threshold) => {
     }
 }
 
-// Transpose
+// Transpose, (row to column vector)
 export const transpose = (arr) => {
     const arrCopy = [...arr];
     const transposed = new Array(arrCopy.length);
-
-    for(let i=0; i<arrCopy.length; i++)
-        transposed[i] = [arrCopy[i]];
+    for(let i=0; i<arrCopy[0].length; i++)
+        transposed[i] = [arrCopy[0][i]];
 
     return transposed;
 }
