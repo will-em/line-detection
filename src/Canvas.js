@@ -16,14 +16,14 @@ function Canvas() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight * scaleFactor;
         
-        //canvas.style.width = `${window.innerWidth}px`;
-        //canvas.style.height = `${window.innerHeight}px`;
+        canvas.style.width = `${window.innerWidth}px`;
+        canvas.style.height = `${window.innerHeight}px`;
 
 
         var imageObj = new Image();
         imageObj.src = require('./Images/stockholm.jpeg'); 
         imageObj.onload = () => setImage(imageObj);
-    }, [])
+    }, [window.innerHeight])
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -39,7 +39,7 @@ function Canvas() {
             // Blurring
             const kernelSize = 5;
             let mat = array_to_mat([...grayscaleArr], imageData.width);
-            let gx= gaussianKernel(1, 11);
+            let gx= gaussianKernel(0.5, 11);
             let gy = transpose(gx);
             console.log(gx);
             console.log(gy);
@@ -49,8 +49,14 @@ function Canvas() {
 
             console.timeEnd("Blur")
             // Edge detection
+            /* SOBEL
             const kernel_x = [[1, 0, -1], [2, 0, -2], [1, 0, -1]];
             const kernel_y = [[1, 2, 1], [0, 0, 0], [-1, -2, -1]];
+            */
+
+            const kernel_x = [[1, 0, -1], [1, 0, -1], [1, 0, -1]];
+            const kernel_y = [[1, 1, 1], [0, 0, 0], [-1, -1, -1]];
+
             let G_x = convolve2d(kernel_x, mat);
             let G_y = convolve2d(kernel_y, mat);
 
@@ -70,7 +76,7 @@ function Canvas() {
     }, [image])
 
     return (
-        <canvas ref={canvasRef} />
+        <canvas id="responsive-canvas" ref={canvasRef} />
     );
 }
 
