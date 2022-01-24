@@ -1,17 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Slider from '@mui/material/Slider';
 
-function VarSlider() {
-    const [value, setValue] = React.useState(1);
+function VarSlider({variance, setVariance}) {
   
     const handleChange = (event, newValue) => {
-      setValue(newValue);
-      console.log(newValue)
+      setVariance(newValue);
     };
   
     return (
         <Slider 
-        value={value} 
+        value={variance} 
+        valueLabelDisplay="auto" 
         onChange={handleChange} 
         min={0.1}
         max={10}

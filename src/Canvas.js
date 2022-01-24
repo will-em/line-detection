@@ -3,7 +3,7 @@ import {convolve2d} from './Convolution';
 import {image_to_grayscale, grayscale_arr_to_image, array_to_mat, flatten, norm256, magnitude, thresholding, transpose} from './HelperFunctions'
 import {gaussianKernel} from './GaussianBlur';
 
-function Canvas() {
+function Canvas({variance}) {
 
     const [image, setImage] = useState(null);
     const [convolvedImage, setConvolvedImage] = useState(null);
@@ -39,7 +39,7 @@ function Canvas() {
             // Blurring
             const kernelSize = 5;
             let mat = array_to_mat([...grayscaleArr], imageData.width);
-            let gx= gaussianKernel(0.5, 11);
+            let gx= gaussianKernel(variance, 11);
             let gy = transpose(gx);
             console.log(gx);
             console.log(gy);
@@ -73,7 +73,7 @@ function Canvas() {
             ctx.putImageData(imageData, canvas.width/2, 0)
 
        } 
-    }, [image])
+    }, [image, variance])
 
     return (
         <canvas id="responsive-canvas" ref={canvasRef} />
