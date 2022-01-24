@@ -3,7 +3,14 @@ const gaussian = (x, y, t) => {
 }
 
 // Return two gaussian
-export const gaussianKernel = (t, size) => {
+export const gaussianMask = (t, size) => {
+
+    // Calculate 
+    let std_dev = Math.sqrt(t);
+    size = Math.ceil(6 * std_dev);
+    if(size % 2 === 0)
+        size++;
+
     const kernel = new Array(size); 
     for(let i=0; i<size; i++){
             kernel[i] = gaussian(-Math.floor(size/2) + i , 0, t);
