@@ -12,9 +12,9 @@ function VarSlider({variance, setVariance}) {
         value={variance} 
         valueLabelDisplay="auto" 
         onChange={handleChange} 
-        min={0.1}
-        max={10}
-        step={0.1}
+        min={0.05}
+        max={5}
+        step={0.05}
         />
     );
   }
