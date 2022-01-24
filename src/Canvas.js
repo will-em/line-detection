@@ -14,10 +14,10 @@ function Canvas() {
     useEffect(() => {
         const canvas = canvasRef.current;
         canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight * scaleFactor;
+        canvas.height = window.innerHeight - 46.5;
         
-        canvas.style.width = `${window.innerWidth}px`;
-        canvas.style.height = `${window.innerHeight}px`;
+        //canvas.style.width = `${window.innerWidth}px`;
+        //canvas.style.height = `${window.innerHeight}px`;
 
 
         var imageObj = new Image();
