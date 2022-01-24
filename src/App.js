@@ -12,7 +12,7 @@ function App() {
       <Canvas variance={variance}/>
       <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
         <VarSlider setVariance={setVariance}/>
-        <Button variant="contained" setVariance={setVariance}>Generate</Button>
+        <Button variant="contained">Generate</Button>
       </Stack>
     </div>
   );
