@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 function App() {
   const [variance, setVariance] = useState(1);
   const [image, setImage] = useState(null);
+  const [generate, setGenerate] = useState(false);
 
   const reader = new FileReader();
   const imageReader = e => {
@@ -22,10 +23,10 @@ function App() {
   }
   return (
     <div>
-      <Canvas variance={variance} uploadedImage={image}/>
+      <Canvas variance={variance} uploadedImage={image} generate={generate} setGenerate={setGenerate}/>
       <Stack id="stack" spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
         <VarSlider setVariance={setVariance}/>
-        <Button variant="contained">Generate</Button>
+        <Button variant="contained" onClick={() => setGenerate(true)}>Generate</Button>
         <Button variant="contained" component="label">Upload<input type="file" hidden onChange={imageReader}/></Button>
       </Stack>
     </div>

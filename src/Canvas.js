@@ -3,7 +3,7 @@ import {convolve2d} from './Convolution';
 import {image_to_grayscale, grayscale_arr_to_image, array_to_mat, flatten, norm256, magnitude, thresholding, transpose} from './HelperFunctions'
 import {gaussianMask} from './GaussianBlur';
 
-function Canvas({variance, uploadedImage}) {
+function Canvas({variance, uploadedImage, generate, setGenerate}) {
 
     const [image, setImage] = useState(null);
     const [convolvedImage, setConvolvedImage] = useState(null);
@@ -12,20 +12,12 @@ function Canvas({variance, uploadedImage}) {
     const scaleFactor = 0.95;
 
     useEffect(() => {
-        const canvas = canvasRef.current;
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight - 36.5 - 25;
-        
-        //canvas.style.width = `${window.innerWidth}px`;
-        //canvas.style.height = `${window.innerHeight}px`;
-
-
         if(!uploadedImage){
             var imageObj = new Image();
             imageObj.src = require('./Images/stockholm.jpeg'); 
             imageObj.onload = () => setImage(imageObj);
         }
-    }, [])
+    }, []);
 
     useEffect(() => {
         if(uploadedImage)
@@ -34,7 +26,9 @@ function Canvas({variance, uploadedImage}) {
 
     useEffect(() => {
         const canvas = canvasRef.current;
-
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight - 36.5 - 25;
+        setGenerate(false);
         if(image && canvas){
             const ctx = canvas.getContext('2d');
             ctx.drawImage(image, 0, 0, canvas.width/2, canvas.height/2);
@@ -78,7 +72,7 @@ function Canvas({variance, uploadedImage}) {
             ctx.putImageData(imageData, canvas.width/2, 0)
 
        } 
-    }, [image, variance])
+    }, [image, variance, generate])
 
     return (
         <canvas id="responsive-canvas" ref={canvasRef} />
