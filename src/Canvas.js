@@ -1,14 +1,26 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect} from 'react';
 import {convolve2d} from './Convolution';
 import {image_to_grayscale, grayscale_arr_to_image, array_to_mat, flatten, norm256, magnitude, thresholding, transpose} from './HelperFunctions'
 import {gaussianMask} from './GaussianBlur';
 
+function useWindowSize() {
+    const [size, setSize] = useState([0, 0]);
+    useLayoutEffect(() => {
+        function updateSize() {
+        setSize([window.innerWidth, window.innerHeight]);
+        }
+        window.addEventListener('resize', updateSize);
+        updateSize();
+        return () => window.removeEventListener('resize', updateSize);
+    }, []);
+    return size;
+}
 function Canvas({variance, uploadedImage, generate, setGenerate}) {
 
     const [image, setImage] = useState(null);
     const [convolvedImage, setConvolvedImage] = useState(null);
     const canvasRef = useRef(null);
-
+    const dim = useWindowSize();
 
     useEffect(() => {
         if(!uploadedImage){
@@ -71,7 +83,7 @@ function Canvas({variance, uploadedImage, generate, setGenerate}) {
             ctx.putImageData(imageData, canvas.width/2, 0)
 
        } 
-    }, [image, variance, generate])
+    }, [image, variance, generate, dim])
 
     return (
         <canvas id="responsive-canvas" ref={canvasRef} />
