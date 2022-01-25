@@ -22,7 +22,7 @@ function App() {
   }
   return (
     <div>
-      <Canvas variance={variance} imageTest={image}/>
+      <Canvas variance={variance} uploadedImage={image}/>
       <Stack id="stack" spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
         <VarSlider setVariance={setVariance}/>
         <Button variant="contained">Generate</Button>

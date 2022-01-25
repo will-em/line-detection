@@ -3,7 +3,7 @@ import {convolve2d} from './Convolution';
 import {image_to_grayscale, grayscale_arr_to_image, array_to_mat, flatten, norm256, magnitude, thresholding, transpose} from './HelperFunctions'
 import {gaussianMask} from './GaussianBlur';
 
-function Canvas({variance, imageTest}) {
+function Canvas({variance, uploadedImage}) {
 
     const [image, setImage] = useState(null);
     const [convolvedImage, setConvolvedImage] = useState(null);
@@ -20,7 +20,7 @@ function Canvas({variance, imageTest}) {
         //canvas.style.height = `${window.innerHeight}px`;
 
 
-        if(!imageTest){
+        if(!uploadedImage){
             var imageObj = new Image();
             imageObj.src = require('./Images/stockholm.jpeg'); 
             imageObj.onload = () => setImage(imageObj);
@@ -28,9 +28,9 @@ function Canvas({variance, imageTest}) {
     }, [])
 
     useEffect(() => {
-        if(imageTest)
-            setImage(imageTest);
-    }, [imageTest]);
+        if(uploadedImage)
+            setImage(uploadedImage);
+    }, [uploadedImage]);
 
     useEffect(() => {
         const canvas = canvasRef.current;
