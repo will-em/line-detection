@@ -9,7 +9,6 @@ function Canvas({variance, uploadedImage, generate, setGenerate}) {
     const [convolvedImage, setConvolvedImage] = useState(null);
     const canvasRef = useRef(null);
 
-    const scaleFactor = 0.95;
 
     useEffect(() => {
         if(!uploadedImage){
