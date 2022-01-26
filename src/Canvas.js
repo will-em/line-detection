@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef, useLayoutEffect} from 'react';
 import {convolve2d} from './Convolution';
-import {image_to_grayscale, grayscale_arr_to_image, array_to_mat, flatten, norm256, magnitude, thresholding, transpose} from './HelperFunctions'
+import {image_to_grayscale, grayscale_arr_to_image, array_to_mat, flatten, norm256, magnitude, thresholding, transpose} from './HelperFunctions';
 import {gaussianMask} from './GaussianBlur';
 
-function useWindowSize() {
+// Custom hook for window size
+function useWindowSize() { 
     const [size, setSize] = useState([0, 0]);
     useLayoutEffect(() => {
         function updateSize() {
@@ -15,6 +16,8 @@ function useWindowSize() {
     }, []);
     return size;
 }
+
+
 function Canvas({variance, uploadedImage, generate, setGenerate}) {
 
     const [image, setImage] = useState(null);
@@ -30,11 +33,13 @@ function Canvas({variance, uploadedImage, generate, setGenerate}) {
         }
     }, []);
 
-    useEffect(() => {
+    // Update image to uploaded image
+    useEffect(() => { 
         if(uploadedImage)
             setImage(uploadedImage);
     }, [uploadedImage]);
 
+    // Resize and redraw canvas
     useEffect(() => {
         const canvas = canvasRef.current;
         canvas.width = window.innerWidth;
