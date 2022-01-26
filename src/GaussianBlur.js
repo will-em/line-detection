@@ -3,7 +3,7 @@ const gaussian = (x, y, t) => {
 }
 
 // Return two gaussian
-export const gaussianMask = (t, size) => {
+export const gaussianMask = t => {
 
     // Calculate 
     let std_dev = Math.sqrt(t);

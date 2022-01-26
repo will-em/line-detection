@@ -54,9 +54,8 @@ function Canvas({variance, uploadedImage, generate, setGenerate}) {
 
 
             // Blurring
-            const kernelSize = 31;
             let mat = array_to_mat([...grayscaleArr], imageData.width);
-            let gx= gaussianMask(variance, kernelSize);
+            let gx= gaussianMask(variance);
             let gy = transpose(gx);
             console.time("Blur")
             mat = convolve2d(gx, mat);
@@ -64,6 +63,7 @@ function Canvas({variance, uploadedImage, generate, setGenerate}) {
 
             console.timeEnd("Blur")
             // Edge detection
+
             /* SOBEL
             const kernel_x = [[1, 0, -1], [2, 0, -2], [1, 0, -1]];
             const kernel_y = [[1, 2, 1], [0, 0, 0], [-1, -2, -1]];
