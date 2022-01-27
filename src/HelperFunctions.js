@@ -61,7 +61,7 @@ export const norm256 = (arr) => {
 
         for(let i=0; i<height; i++){
             for(let j=0; j<width; j++){
-                arr[i][j] = Math.floor(255 * arr[i][j] / max);
+                arr[i][j] = Math.round(255 * arr[i][j] / max);
             }
         }
     }
