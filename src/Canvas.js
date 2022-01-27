@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, useLayoutEffect} from 'react';
 import {convolve2d} from './Convolution';
-import {image_to_grayscale, grayscale_arr_to_image, array_to_mat, flatten, norm256, magnitude, thresholding, transpose} from './HelperFunctions';
+import {image_to_grayscale, grayscale_arr_to_image, array_to_mat, flatten, 
+    norm256, magnitude, thresholding, transpose} from './HelperFunctions';
+
 import {gaussianMask} from './GaussianBlur';
 
 // Custom hook for window size
