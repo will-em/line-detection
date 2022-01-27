@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useLayoutEffect} from 'react';
 import {convolve2d} from './Convolution';
 import {image_to_grayscale, grayscale_arr_to_image, array_to_mat, flatten, 
-    norm256, magnitude, thresholding, transpose} from './HelperFunctions';
+    norm256, magnitude, angle, thresholding, transpose} from './HelperFunctions';
 
 import {gaussianMask} from './GaussianBlur';
 
@@ -77,7 +77,8 @@ function Canvas({variance, uploadedImage, generate, setGenerate}) {
             let G_x = convolve2d(kernel_x, mat);
             let G_y = convolve2d(kernel_y, mat);
 
-            let G = magnitude(G_x, G_y) 
+            let G = magnitude(G_x, G_y); 
+            let theta = angle(G_x, G_y); 
            
             // Normalizing 
             norm256(G); 

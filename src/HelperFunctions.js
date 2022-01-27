@@ -83,6 +83,23 @@ export const magnitude = (G_x, G_y) => {
     return G;
 }
 
+// Compute the angle of the gradient 
+export const angle = (G_x, G_y) => {
+
+    let height = G_x.length;
+    let width = G_y[0].length;
+
+    let theta = [...G_x];
+
+    for(let i=0; i<height; i++){
+        for(let j=0; j<width; j++){
+            theta[i][j] = Math.atan2(G_y[i][j], G_x[i][j]);
+        }
+    }
+
+    return theta;
+}
+
 // Thresholding
 export const thresholding = (arr, threshold) => {
     let height = arr.length;
