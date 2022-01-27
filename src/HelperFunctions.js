@@ -1,5 +1,5 @@
 // Create grayscale array from image data (RGBA -> grayscale)
-export const image_to_grayscale = (ImageData) => { // Neglecting transparency 
+export const image_to_grayscale = (ImageData) => { // Neglecting alpha (transparency)
     let grayArr = new Array(ImageData.width*ImageData.height);
     let j = 0;
     for(let i=0; i<grayArr.length; i++){
@@ -72,11 +72,11 @@ export const magnitude = (G_x, G_y) => {
     let height = G_x.length;
     let width = G_y[0].length;
 
-    let G = [...G_x];
+    let G = [...Array(height)].map(e => Array(width)); 
 
     for(let i=0; i<height; i++){
         for(let j=0; j<width; j++){
-            G[i][j] = Math.sqrt(G_x[i][j] * G_x[i][j] + G_y[i][j] * G_y[i][j])
+            G[i][j] = Math.round(Math.sqrt(G_x[i][j] * G_x[i][j] + G_y[i][j] * G_y[i][j]));
         }
     }
 
@@ -87,18 +87,52 @@ export const magnitude = (G_x, G_y) => {
 export const angle = (G_x, G_y) => {
 
     let height = G_x.length;
-    let width = G_y[0].length;
+    let width = G_x[0].length;
 
-    let theta = [...G_x];
+
+    let theta = [...Array(height)].map(e => Array(width)); 
+
 
     for(let i=0; i<height; i++){
         for(let j=0; j<width; j++){
-            theta[i][j] = Math.atan2(G_y[i][j], G_x[i][j]);
+            theta[i][j] = Math.atan2(G_y[i][j], G_x[i][j]) * 180 / Math.PI;
         }
     }
 
     return theta;
 }
+
+export const non_max_sup = (G, angle) => {
+
+    let height = G.length;
+    let width = G[0].length;
+
+    let new_img = Array(height).fill().map(() => Array(width).fill(0));
+    
+
+    for(let i=1; i<height-1; i++){
+        for(let j=1; j<width-1; j++){
+            if((angle[i][j] >= -22.5 && angle[i][j] <= 22.5) || (angle[i][j] <= -157.5 && angle[i][j] >= 157.5)){
+                if(G[i][j] > G[i][j + 1] && G[i][j] > G[i][j -1])
+                    new_img[i][j] = G[i][j];
+            }else if((angle[i][j] >= 22.5 && angle[i][j] <= 67.5) || (angle[i][j] <= -112.5 && angle[i][j] >= -157.5)){
+                if(G[i][j] > G[i + 1][j + 1] && G[i][j] > G[i - 1][j -1])
+                    new_img[i][j] = G[i][j];
+
+            }else if((angle[i][j] >= 67.5 && angle[i][j] <= 112.5) || (angle[i][j] <= -67.5 && angle[i][j] >= -112.5)){
+                if(G[i][j] > G[i + 1][j] && G[i][j] > G[i - 1][j])
+                    new_img[i][j] = G[i][j];
+            
+            }else if((angle[i][j] >= 112.5 && angle[i][j] <= 157.5) || (angle[i][j] <= -22.5 && angle[i][j] >= -67.5)){
+                if(G[i][j] > G[i + 1][j - 1] && G[i][j] > G[i - 1][j + 1])
+                    new_img[i][j] = G[i][j];
+            }
+        }
+    }
+
+    return new_img;
+}
+
 
 // Thresholding
 export const thresholding = (arr, threshold) => {
@@ -115,7 +149,7 @@ export const thresholding = (arr, threshold) => {
 
 // Transpose, (row to column vector)
 export const transpose = (arr) => {
-    const arrCopy = [...arr];
+    const arrCopy = [...arr]; // Shallow copy
     const transposed = new Array(arrCopy.length);
     for(let i=0; i<arrCopy[0].length; i++)
         transposed[i] = [arrCopy[0][i]];

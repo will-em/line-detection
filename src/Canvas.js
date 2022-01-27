@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useLayoutEffect} from 'react';
 import {convolve2d} from './Convolution';
 import {image_to_grayscale, grayscale_arr_to_image, array_to_mat, flatten, 
-    norm256, magnitude, angle, thresholding, transpose} from './HelperFunctions';
+    norm256, magnitude, angle, non_max_sup, thresholding, transpose} from './HelperFunctions';
 
 import {gaussianMask} from './GaussianBlur';
 
@@ -79,13 +79,16 @@ function Canvas({variance, uploadedImage, generate, setGenerate}) {
 
             let G = magnitude(G_x, G_y); 
             let theta = angle(G_x, G_y); 
+            console.time("SUP")
+            let new_G = non_max_sup(G, theta);
+            console.timeEnd("SUP")
            
             // Normalizing 
-            norm256(G); 
+            norm256(new_G); 
 
             // Thresholding
-            thresholding(G, 0); 
-            let filteredImageArr = flatten(G);
+            thresholding(new_G, 0); 
+            let filteredImageArr = flatten(new_G);
             grayscale_arr_to_image(filteredImageArr, imageData)
             
             ctx.putImageData(imageData, canvas.width/2, 0)
