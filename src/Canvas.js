@@ -30,7 +30,7 @@ function Canvas({variance, uploadedImage, generate, setGenerate}) {
     useEffect(() => {
         if(!uploadedImage){
             var imageObj = new Image();
-            imageObj.src = require('./Images/stockholm.jpeg'); 
+            imageObj.src = require('./Images/parrot.jpeg'); 
             imageObj.onload = () => setImage(imageObj);
         }
     }, []);
@@ -66,14 +66,13 @@ function Canvas({variance, uploadedImage, generate, setGenerate}) {
             console.timeEnd("Blur")
             // Edge detection
 
-            /* SOBEL
+           //  SOBEL
             const kernel_x = [[1, 0, -1], [2, 0, -2], [1, 0, -1]];
             const kernel_y = [[1, 2, 1], [0, 0, 0], [-1, -2, -1]];
-            */
-
+            /*
             const kernel_x = [[1, 0, -1], [1, 0, -1], [1, 0, -1]];
             const kernel_y = [[1, 1, 1], [0, 0, 0], [-1, -1, -1]];
-
+            */
             let G_x = convolve2d(kernel_x, mat);
             let G_y = convolve2d(kernel_y, mat);
 

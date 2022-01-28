@@ -8,6 +8,7 @@ export const gaussianMask = t => {
     // Calculate 
     let std_dev = Math.sqrt(t);
     let size = Math.ceil(6 * std_dev);
+    //let size = 5;
     if(size % 2 === 0)
         size++;
 
