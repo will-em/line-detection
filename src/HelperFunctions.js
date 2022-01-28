@@ -46,9 +46,8 @@ export const flatten = (arr) => {
 
     return flat;
 }
-
-// Normalize 2D-array and multiply by 255
-export const norm256 = (arr) => {
+// Get max-value from 2D-array
+export const getMax = arr => {
     let height = arr.length;
     let width = arr[0].length;
     let max = -10;
@@ -57,6 +56,29 @@ export const norm256 = (arr) => {
         if(temp_max>max)
             max = temp_max;
     }
+    return max;
+}
+
+// Get min-value from 2D-array
+
+export const getMin = arr => {
+    let height = arr.length;
+    let width = arr[0].length;
+    let min = Number.MAX_SAFE_INTEGER; // Large integer
+    for(let i=0; i<height; i++){
+        let temp_min = Math.min(...arr[i])
+        if(temp_min<min)
+            min = temp_min;
+    }
+    return min;
+}
+
+
+// Normalize 2D-array and multiply by 255
+export const norm256 = (arr) => {
+    let height = arr.length;
+    let width = arr[0].length;
+    let max = getMax(arr);
     if(max!==255){
 
         for(let i=0; i<height; i++){

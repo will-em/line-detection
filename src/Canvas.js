@@ -4,7 +4,7 @@ import {image_to_grayscale, grayscale_arr_to_image, array_to_mat, flatten,
     norm256, magnitude, angle, non_max_sup, thresholding, transpose} from './HelperFunctions';
 
 import {gaussianMask} from './GaussianBlur';
-
+import {hysteris_thresholding} from './CannyEdgeDetection';
 // Custom hook for window size
 function useWindowSize() { 
     const [size, setSize] = useState([0, 0]);
@@ -81,13 +81,16 @@ function Canvas({variance, uploadedImage, generate, setGenerate}) {
             console.time("SUP")
             let new_G = non_max_sup(G, theta);
             console.timeEnd("SUP")
-           
+            
+            norm256(new_G);
+            let test = hysteris_thresholding(new_G, 0.1, 0.3);
+
             // Normalizing 
-            norm256(new_G); 
+            norm256(test); 
 
             // Thresholding
-            thresholding(new_G, 0); 
-            let filteredImageArr = flatten(new_G);
+            thresholding(test, 0); 
+            let filteredImageArr = flatten(test);
             grayscale_arr_to_image(filteredImageArr, imageData)
             
             ctx.putImageData(imageData, canvas.width/2, 0)
