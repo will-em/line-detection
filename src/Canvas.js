@@ -30,7 +30,7 @@ function Canvas({variance, uploadedImage, generate, setGenerate}) {
     useEffect(() => {
         if(!uploadedImage){
             var imageObj = new Image();
-            imageObj.src = require('./Images/parrot.jpeg'); 
+            imageObj.src = require('./Images/stockholm.jpeg'); 
             imageObj.onload = () => setImage(imageObj);
         }
     }, []);
