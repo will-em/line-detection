@@ -23,7 +23,7 @@ function useWindowSize() {
 function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t}) {
 
     const [image, setImage] = useState(null);
-    const [convolvedImage, setConvolvedImage] = useState(null);
+    const [edgeImage, setEdgeImage] = useState(null);
     const canvasRef = useRef(null);
     const dim = useWindowSize();
 
@@ -83,6 +83,8 @@ function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t})
             console.timeEnd("SUP")
             
             norm256(new_G);
+            setEdgeImage(new_G);
+            /*
             let test = hysteris_thresholding(new_G, low_t, high_t);
 
             // Normalizing 
@@ -94,9 +96,31 @@ function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t})
             grayscale_arr_to_image(filteredImageArr, imageData)
             
             ctx.putImageData(imageData, canvas.width/2, 0)
+            */
 
        } 
-    }, [image, variance, generate, dim, low_t, high_t])
+    }, [image, variance, generate, dim])
+
+
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        if(image && canvas && edgeImage){
+            let imageData = ctx.getImageData(0, 0, canvas.width/2, canvas.height/2);
+            let test = hysteris_thresholding(edgeImage, low_t, high_t);
+
+            // Normalizing 
+            norm256(test); 
+
+            // Thresholding
+            thresholding(test, 0); 
+            let filteredImageArr = flatten(test);
+            grayscale_arr_to_image(filteredImageArr, imageData)
+            
+            ctx.putImageData(imageData, canvas.width/2, 0)
+        }
+
+    }, [edgeImage, low_t, high_t])
 
     return (
         <canvas id="responsive-canvas" ref={canvasRef} />
