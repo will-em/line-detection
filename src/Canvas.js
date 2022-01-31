@@ -84,19 +84,6 @@ function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t})
             
             norm256(new_G);
             setEdgeImage(new_G);
-            /*
-            let test = hysteris_thresholding(new_G, low_t, high_t);
-
-            // Normalizing 
-            norm256(test); 
-
-            // Thresholding
-            thresholding(test, 0); 
-            let filteredImageArr = flatten(test);
-            grayscale_arr_to_image(filteredImageArr, imageData)
-            
-            ctx.putImageData(imageData, canvas.width/2, 0)
-            */
 
        } 
     }, [image, variance, generate, dim])
@@ -107,14 +94,14 @@ function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t})
         const ctx = canvas.getContext('2d');
         if(image && canvas && edgeImage){
             let imageData = ctx.getImageData(0, 0, canvas.width/2, canvas.height/2);
-            let test = hysteris_thresholding(edgeImage, low_t, high_t);
-
-            // Normalizing 
-            norm256(test); 
-
             // Thresholding
-            thresholding(test, 0); 
-            let filteredImageArr = flatten(test);
+            let thresholded = hysteris_thresholding(edgeImage, low_t, high_t);
+            
+            // Normalizing 
+            norm256(thresholded); 
+
+            //thresholding(test, 0); 
+            let filteredImageArr = flatten(thresholded);
             grayscale_arr_to_image(filteredImageArr, imageData)
             
             ctx.putImageData(imageData, canvas.width/2, 0)

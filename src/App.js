@@ -7,8 +7,8 @@ import Button from '@mui/material/Button';
 
 function App() {
   const [variance, setVariance] = useState(1);
-  const [low_t, setLow_t] = useState(50);
-  const [high_t, setHigh_t] = useState(100);
+  const [low_t, setLow_t] = useState(20);
+  const [high_t, setHigh_t] = useState(30);
   const [image, setImage] = useState(null);
   const [generate, setGenerate] = useState(false);
 
