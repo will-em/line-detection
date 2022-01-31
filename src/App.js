@@ -7,8 +7,8 @@ import Button from '@mui/material/Button';
 
 function App() {
   const [variance, setVariance] = useState(1);
-  const [low_t, setLow_t] = useState(0.05);
-  const [high_t, setHigh_t] = useState(0.5);
+  const [low_t, setLow_t] = useState(0.1);
+  const [high_t, setHigh_t] = useState(0.3);
   const [image, setImage] = useState(null);
   const [generate, setGenerate] = useState(false);
 
@@ -30,11 +30,18 @@ function App() {
   }
   return (
     <div>
-      <Canvas variance={variance} uploadedImage={image} generate={generate} setGenerate={setGenerate}/>
+      <Canvas 
+        variance={variance} 
+        uploadedImage={image} 
+        generate={generate} 
+        setGenerate={setGenerate}
+        low_t={low_t}
+        high_t={high_t}
+      />
       <Stack id="stack" spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
         <VarSlider value={variance} setValue={setVariance} min={0.05} max={5} step={0.05}/>
-        <VarSlider value={low_t} setValue={setLow_t} min={0.05} max={0.9} step={0.05}/>
-        <VarSlider value={high_t} setValue={setHigh_t} min={0.05} max={0.9} step={0.05} low_t={low_t}/>
+        <VarSlider value={low_t} setValue={setLow_t} min={0.05} max={0.95} step={0.05}/>
+        <VarSlider value={high_t} setValue={setHigh_t} min={0.05} max={0.95} step={0.05} low_t={low_t}/>
         <Button variant="contained" onClick={() => setGenerate(true)}>Generate</Button>
         <Button variant="contained" component="label">Upload<input type="file" hidden onChange={imageReader}/></Button>
       </Stack>

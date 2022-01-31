@@ -20,7 +20,7 @@ function useWindowSize() {
 }
 
 
-function Canvas({variance, uploadedImage, generate, setGenerate}) {
+function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t}) {
 
     const [image, setImage] = useState(null);
     const [convolvedImage, setConvolvedImage] = useState(null);
@@ -83,7 +83,7 @@ function Canvas({variance, uploadedImage, generate, setGenerate}) {
             console.timeEnd("SUP")
             
             norm256(new_G);
-            let test = hysteris_thresholding(new_G, 0.1, 0.3);
+            let test = hysteris_thresholding(new_G, low_t, high_t);
 
             // Normalizing 
             norm256(test); 
@@ -96,7 +96,7 @@ function Canvas({variance, uploadedImage, generate, setGenerate}) {
             ctx.putImageData(imageData, canvas.width/2, 0)
 
        } 
-    }, [image, variance, generate, dim])
+    }, [image, variance, generate, dim, low_t, high_t])
 
     return (
         <canvas id="responsive-canvas" ref={canvasRef} />
