@@ -49,15 +49,12 @@ export const hysteris_thresholding = (arr, low, high) => {
                     let eight_neighborhood = [temp_arr[im1][jm1], temp_arr[im1][j], temp_arr[im1][jp1], temp_arr[i][jm1],
                         temp_arr[i][jp1], temp_arr[ip1][jm1], temp_arr[ip1][j], temp_arr[ip1][jp1]];
                     
-                    let has_neighbor = false;
                     for(let k = 0; k<eight_neighborhood.length; k++){
-                        if(eight_neighborhood[k] > t_high)
-                            has_neighbor = true;
-                    }
-                    
-                    if(has_neighbor){
-                        temp_arr[i][j] = 255;
-                        num_of_ones++;
+                        if(eight_neighborhood[k] > t_high){
+                            temp_arr[i][j] = 255;
+                            num_of_ones++;
+                            break;
+                        }
                     }
                 }
 
