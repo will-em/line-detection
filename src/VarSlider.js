@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import Slider from '@mui/material/Slider';
 
 function VarSlider({min, max, step, value, setValue, low_t}) {
