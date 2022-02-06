@@ -1,14 +1,46 @@
-import {getMin, getMax} from './HelperFunctions'
+import { norm256, magnitude, angle, non_max_sup, transpose} from './HelperFunctions';
+import {gaussianMask} from './GaussianBlur';
+import {convolve2d} from './Convolution';
+
+export const edges = (mat, variance) => {
+    let gx= gaussianMask(variance);
+    let gy = transpose(gx);
+    console.time("Blur")
+    mat = convolve2d(gx, mat);
+    mat = convolve2d(gy, mat);
+
+    console.timeEnd("Blur")
+    // Edge detection
+
+    //  SOBEL
+    const kernel_x = [[1, 0, -1], [2, 0, -2], [1, 0, -1]];
+    const kernel_y = [[1, 2, 1], [0, 0, 0], [-1, -2, -1]];
+    /*
+    const kernel_x = [[1, 0, -1], [1, 0, -1], [1, 0, -1]];
+    const kernel_y = [[1, 1, 1], [0, 0, 0], [-1, -1, -1]];
+    */
+    let G_x = convolve2d(kernel_x, mat);
+    let G_y = convolve2d(kernel_y, mat);
+
+    let G = magnitude(G_x, G_y); 
+    let theta = angle(G_x, G_y); 
+    console.time("SUP")
+    let new_G = non_max_sup(G, theta);
+    console.timeEnd("SUP")
+    norm256(new_G);
+
+    return new_G;
+}
 
 export const hysteris_thresholding = (arr, low, high) => {
 
     let height = arr.length;
     let width = arr[0].length;
 
+    /*
     let min = getMin(arr);
     let max = getMax(arr);
 
-    /*
     let diff = max - min;
     let t_low = min + low * diff;
     let t_high = min + high * diff;
@@ -26,7 +58,7 @@ export const hysteris_thresholding = (arr, low, high) => {
     }
     let num_of_ones = 1
     let old_num_of_ones = 2;
-    while(num_of_ones != old_num_of_ones){
+    while(num_of_ones !== old_num_of_ones){
         old_num_of_ones = num_of_ones;
         num_of_ones = 0;
         // Assign pixel values

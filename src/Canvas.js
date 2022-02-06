@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef, useLayoutEffect} from 'react';
-import {convolve2d} from './Convolution';
 import {image_to_grayscale, grayscale_arr_to_image, array_to_mat, flatten, 
-    norm256, magnitude, angle, non_max_sup, thresholding, transpose} from './HelperFunctions';
+    norm256} from './HelperFunctions';
 
-import {gaussianMask} from './GaussianBlur';
-import {hysteris_thresholding} from './CannyEdgeDetection';
+import {edges, hysteris_thresholding} from './CannyEdgeDetection';
 // Custom hook for window size
 function useWindowSize() { 
     const [size, setSize] = useState([0, 0]);
@@ -53,37 +51,10 @@ function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t})
 
             let imageData = ctx.getImageData(0, 0, canvas.width/2, canvas.height/2);
             let grayscaleArr = image_to_grayscale(imageData); 
-
-
-            // Blurring
             let mat = array_to_mat([...grayscaleArr], imageData.width);
-            let gx= gaussianMask(variance);
-            let gy = transpose(gx);
-            console.time("Blur")
-            mat = convolve2d(gx, mat);
-            mat = convolve2d(gy, mat);
 
-            console.timeEnd("Blur")
-            // Edge detection
-
-           //  SOBEL
-            const kernel_x = [[1, 0, -1], [2, 0, -2], [1, 0, -1]];
-            const kernel_y = [[1, 2, 1], [0, 0, 0], [-1, -2, -1]];
-            /*
-            const kernel_x = [[1, 0, -1], [1, 0, -1], [1, 0, -1]];
-            const kernel_y = [[1, 1, 1], [0, 0, 0], [-1, -1, -1]];
-            */
-            let G_x = convolve2d(kernel_x, mat);
-            let G_y = convolve2d(kernel_y, mat);
-
-            let G = magnitude(G_x, G_y); 
-            let theta = angle(G_x, G_y); 
-            console.time("SUP")
-            let new_G = non_max_sup(G, theta);
-            console.timeEnd("SUP")
-            
-            norm256(new_G);
-            setEdgeImage(new_G);
+            let edge_mat = edges(mat, variance);
+            setEdgeImage(edge_mat);
 
        } 
     }, [image, variance, generate, dim])
