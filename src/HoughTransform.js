@@ -21,6 +21,7 @@ export const get_accumulator = (arr, magnitude, N_rho, N_theta) => {
 
     let theta_arr = linspace(-Math.PI / 2, Math.PI, N_theta);
 
+    // Pre-calculate trig values
     let cos_arr = new Array(N_theta);
     let sin_arr = new Array(N_theta);
     for(let t_i=0; t_i < N_theta; t_i++){
