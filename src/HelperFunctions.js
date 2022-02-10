@@ -79,7 +79,7 @@ export const norm256 = (arr) => {
     let height = arr.length;
     let width = arr[0].length;
     let max = getMax(arr);
-    if(max!==255){
+    if(max!==255 || max!==0){
 
         for(let i=0; i<height; i++){
             for(let j=0; j<width; j++){
