@@ -3,6 +3,7 @@ import {image_to_grayscale, grayscale_arr_to_image, array_to_mat, flatten,
     norm256} from './HelperFunctions';
 
 import {edges, hysteris_thresholding} from './CannyEdgeDetection';
+import { get_accumulator } from './HoughTransform';
 // Custom hook for window size
 function useWindowSize() { 
     const [size, setSize] = useState([0, 0]);
@@ -22,6 +23,8 @@ function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t})
 
     const [image, setImage] = useState(null);
     const [edgeImage, setEdgeImage] = useState(null);
+    const [magnitude, setMagnitude] = useState(null);
+    const [hystImage, setHystImage] = useState(null);
     const canvasRef = useRef(null);
     const dim = useWindowSize();
 
@@ -53,8 +56,9 @@ function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t})
             let grayscaleArr = image_to_grayscale(imageData); 
             let mat = array_to_mat([...grayscaleArr], imageData.width);
 
-            let edge_mat = edges(mat, variance);
+            const [edge_mat, magnitude] = edges(mat, variance);
             setEdgeImage(edge_mat);
+            setMagnitude(magnitude);
 
        } 
     }, [image, variance, generate, dim])
@@ -71,6 +75,8 @@ function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t})
             // Normalizing 
             norm256(thresholded); 
 
+            setHystImage(thresholded);
+
             //thresholding(test, 0); 
             let filteredImageArr = flatten(thresholded);
             grayscale_arr_to_image(filteredImageArr, imageData)
@@ -79,6 +85,20 @@ function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t})
         }
 
     }, [edgeImage, low_t, high_t])
+
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        if(image && canvas && hystImage && magnitude){
+            let imageData = ctx.getImageData(0, canvas.height/2, canvas.width/2, canvas.height/2);
+            const accumulator = get_accumulator(hystImage, magnitude, hystImage.length, hystImage[0].length);
+
+            let accumulatorArr = flatten(accumulator);
+            grayscale_arr_to_image(accumulatorArr, imageData)
+            
+            ctx.putImageData(imageData, 0, canvas.height/2)
+        }
+    }, [hystImage])
 
     return (
         <canvas id="responsive-canvas" ref={canvasRef} />

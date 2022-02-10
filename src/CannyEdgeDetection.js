@@ -25,11 +25,11 @@ export const edges = (mat, variance) => {
     let G = magnitude(G_x, G_y); 
     let theta = angle(G_x, G_y); 
     console.time("SUP")
-    let new_G = non_max_sup(G, theta);
+    let non_max_G = non_max_sup(G, theta);
     console.timeEnd("SUP")
-    norm256(new_G);
+    norm256(non_max_G);
 
-    return new_G;
+    return [non_max_G, G];
 }
 
 export const hysteris_thresholding = (arr, low, high) => {
