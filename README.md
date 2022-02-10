@@ -10,4 +10,5 @@ All Image-processing is implemented <ins>from scratch</ins> using JavaScript arr
 ## Todo
 1. Dynamically size gaussian kernel with variance by truncating elements lower than a fixed amount :white_check_mark:
 2. Get image data from file upload, solve cross-origin issues :white_check_mark:
-3. Speed up blurring by filtering in the frequency domain, i.e implement FFT
+3. Interpolate accumulator image
+4. Speed up blurring by filtering in the frequency domain, i.e implement FFT
