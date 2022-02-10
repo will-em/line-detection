@@ -91,7 +91,10 @@ function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t})
         const ctx = canvas.getContext('2d');
         if(image && canvas && hystImage && magnitude){
             let imageData = ctx.getImageData(0, canvas.height/2, canvas.width/2, canvas.height/2);
+
+            console.time("Accumulator")
             const accumulator = get_accumulator(hystImage, magnitude, hystImage.length, hystImage[0].length);
+            console.timeEnd("Accumulator")
 
             let accumulatorArr = flatten(accumulator);
             grayscale_arr_to_image(accumulatorArr, imageData)

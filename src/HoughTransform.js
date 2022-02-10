@@ -21,6 +21,13 @@ export const get_accumulator = (arr, magnitude, N_rho, N_theta) => {
 
     let theta_arr = linspace(-Math.PI / 2, Math.PI, N_theta);
 
+    let cos_arr = new Array(N_theta);
+    let sin_arr = new Array(N_theta);
+    for(let t_i=0; t_i < N_theta; t_i++){
+        cos_arr[t_i] = Math.cos(theta_arr[t_i])
+        sin_arr[t_i] = Math.sin(theta_arr[t_i])
+    }
+
     
     let acc = Array(N_rho).fill().map(() => Array(N_theta).fill(0));
     //acc[100][100] = 1;
@@ -34,7 +41,7 @@ export const get_accumulator = (arr, magnitude, N_rho, N_theta) => {
                 // Loop over thetas
                 for(let t_i=0; t_i < N_theta; t_i++){
                     // Compute rho
-                    let rho = x_t * Math.cos(theta_arr[t_i]) + y_t * Math.sin(theta_arr[t_i]);
+                    let rho = x_t * cos_arr[t_i] + y_t * sin_arr[t_i];
 
                     // Find index for rho in accumulator space  
                     let r_i = Math.floor(N_rho * (rho + hyp / 2) / hyp)
@@ -47,6 +54,5 @@ export const get_accumulator = (arr, magnitude, N_rho, N_theta) => {
     }
 
     norm256(acc);
-    console.log(acc)
     return acc;
 }
