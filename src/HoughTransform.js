@@ -10,15 +10,12 @@ const linspace = (start, end, N) => {
     return res;
 }
 
-
 export const get_accumulator = (arr, magnitude, N_rho, N_theta) => {
     let height = arr.length;
     let width = arr[0].length;
 
     let hyp = Math.round(Math.sqrt(height * height + width * width));
     
-    let rho_arr = linspace(-hyp / 2, hyp / 2, N_rho);
-
     let theta_arr = linspace(-Math.PI / 2, Math.PI, N_theta);
 
     // Pre-calculate trig values
@@ -31,7 +28,6 @@ export const get_accumulator = (arr, magnitude, N_rho, N_theta) => {
 
     
     let acc = Array(N_rho).fill().map(() => Array(N_theta).fill(0));
-    //acc[100][100] = 1;
     for(let i=0; i<height; i++){
         for(let j=0; j<width; j++){
             if(arr[i][j]===255){ // If the coordinate is an edge
