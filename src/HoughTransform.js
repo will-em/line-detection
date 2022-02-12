@@ -10,6 +10,42 @@ const linspace = (start, end, N) => {
     return res;
 }
 
+export const find_local_max = arr => {
+    let height = arr.length;
+    let width = arr[0].length;
+    console.log(height*width)
+
+    let index_arr = [];
+    let value_arr = [];
+    for(let i=0; i<height; i++){
+        for(let j=0; j<width; j++){
+            if(arr[i][j] !== 0){ // Zero is not an interesting peak
+                //  tl tj tr
+                //  il XX ir
+                //  bl bj br
+
+                let l = j!==0 ? j-1 : j;
+                let r = j!==width-1 ? j+1 : j;
+
+                let t = i!==0 ? i-1 : i;
+                let b = i!==height-1 ? i+1 : i;
+
+                let val = arr[i][j]
+                let is_local_max = val>=arr[t][l] && val>=arr[t][j] && val>=arr[t][r] && 
+                    val>=arr[i][l] && val>=arr[i][r] &&
+                    val>=arr[b][l] && val>=arr[b][j] && val>=arr[b][r];
+
+                if(is_local_max){
+                    index_arr.push([i, j]);
+                    value_arr.push(val);
+                }
+            }
+
+        }
+    }
+
+    return [index_arr, value_arr];
+}
 export const get_accumulator = (arr, magnitude, N_rho, N_theta) => {
     let height = arr.length;
     let width = arr[0].length;
