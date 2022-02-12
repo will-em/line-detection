@@ -3,7 +3,7 @@ import {image_to_grayscale, grayscale_arr_to_image, array_to_mat, flatten,
     norm256} from './HelperFunctions';
 
 import {edges, hysteris_thresholding} from './CannyEdgeDetection';
-import { get_accumulator, find_local_max} from './HoughTransform';
+import { get_accumulator, find_local_max, calculate_lines} from './HoughTransform';
 // Custom hook for window size
 function useWindowSize() { 
     const [size, setSize] = useState([0, 0]);
@@ -25,6 +25,7 @@ function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t})
     const [edgeImage, setEdgeImage] = useState(null);
     const [magnitude, setMagnitude] = useState(null);
     const [hystImage, setHystImage] = useState(null);
+    const [lines, setLines] = useState(null);
     const canvasRef = useRef(null);
     const dim = useWindowSize();
 
@@ -99,16 +100,21 @@ function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t})
             let accumulatorArr = flatten(accumulator);
             grayscale_arr_to_image(accumulatorArr, imageData);
 
-            console.time("Local max");
-            const [index_arr, value_arr] = find_local_max(accumulator);
-            console.timeEnd("Local max");
-            console.time("Sort")
-            value_arr.sort();
-            console.timeEnd("Sort")
-            
-            ctx.putImageData(imageData, 0, canvas.height/2)
+            ctx.putImageData(imageData, 0, canvas.height/2);
+
+            let line_arr = calculate_lines(accumulator);
+
+            setLines(line_arr);
         }
     }, [hystImage])
+
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        if(image && canvas && hystImage && magnitude && lines){
+            ctx.drawImage(image, canvas.width/2, canvas.height/2, canvas.width/2, canvas.height/2);
+        }
+    }, [lines])
 
     return (
         <canvas id="responsive-canvas" ref={canvasRef} />

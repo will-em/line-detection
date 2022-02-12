@@ -1,3 +1,4 @@
+import { number } from 'mathjs';
 import {norm256} from './HelperFunctions'
 const linspace = (start, end, N) => {
     let res = Array(N);
@@ -78,7 +79,7 @@ export const get_accumulator = (arr, magnitude, N_rho, N_theta) => {
 
                     // Find index for rho in accumulator space  
                     let r_i = Math.floor(N_rho * (rho + hyp / 2) / hyp)
-                    //console.log({r_i, x_t, y_t, hyp, rho})
+                    //console.log({r_i, x_t, y_t, hyp, rho})§
                     acc[r_i][t_i] += Math.abs(magnitude[i][j]) // h(x) = x
                 }
 
@@ -88,4 +89,53 @@ export const get_accumulator = (arr, magnitude, N_rho, N_theta) => {
 
     norm256(acc);
     return acc;
+}
+
+const dsu = (arr1, arr2) => arr1
+  .map((item, index) => [arr2[index], item]) // add the args to sort by
+  .sort(([arg1], [arg2]) => arg2 - arg1) // sort by the args
+  .map(([, item]) => item); // extract the sorted items
+
+export const calculate_lines = (accumulator, N_lines, N_rho, N_theta) => {
+    let height = accumulator.length;
+    let width = accumulator[0].length;
+
+    let hyp = Math.round(Math.sqrt(height * height + width * width));
+
+    let rho_arr = linspace(-hyp / 2, hyp / 2, N_rho); 
+    let theta_arr = linspace(-Math.PI / 2, Math.PI, N_theta);
+
+    console.time("Local max");
+    const [index_arr, value_arr] = find_local_max(accumulator);
+    console.timeEnd("Local max");
+    
+            
+    console.time("Sort")
+    let sorted_index_arr = dsu(index_arr, value_arr)
+    console.timeEnd("Sort")
+
+    if(N_lines< sorted_index_arr.length)
+        sorted_index_arr = sorted_index_arr.slice(-N_lines);
+    
+    let lines = [];
+    for(let i=0; i<N_lines; i++){
+        let rho = rho_arr[sorted_index_arr[i][0]];
+        let theta = theta_arr[sorted_index_arr[i][1]];
+
+        let t = 100;
+        let a = Math.cos(theta);
+        let b = Math.sin(theta);
+
+        let x0 = a * rho;
+        let y0 = b * rho;
+
+        let x1 = Math.round(x0 - t * b) + width / 2;
+        let y1 = -Math.round(y0 + t * a) + height / 2;
+        let x2 = Math.round(x0 + t * b) + width / 2;
+        let y2 = -Math.round(y0 - t * a) + height / 2;
+
+        lines.push([x1, y1, x2, y2]);
+    }
+
+    return lines
 }
