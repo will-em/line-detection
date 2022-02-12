@@ -29,6 +29,9 @@ function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t})
     const canvasRef = useRef(null);
     const dim = useWindowSize();
 
+    const N_rho = 1000;
+    const N_theta = 1000;
+
     useEffect(() => {
         if(!uploadedImage){
             var imageObj = new Image();
@@ -94,7 +97,7 @@ function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t})
             let imageData = ctx.getImageData(0, canvas.height/2, canvas.width/2, canvas.height/2);
 
             console.time("Accumulator")
-            const accumulator = get_accumulator(hystImage, magnitude, hystImage.length, hystImage[0].length);
+            const accumulator = get_accumulator(hystImage, magnitude, N_rho, N_theta);
             console.timeEnd("Accumulator")
 
             let accumulatorArr = flatten(accumulator);
@@ -102,7 +105,7 @@ function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t})
 
             ctx.putImageData(imageData, 0, canvas.height/2);
 
-            let line_arr = calculate_lines(accumulator);
+            let line_arr = calculate_lines(accumulator, magnitude, 20, N_rho, N_theta);
 
             setLines(line_arr);
         }
@@ -111,8 +114,16 @@ function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t})
     useEffect(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
+        ctx.strokeStyle = "#FF0000";
         if(image && canvas && hystImage && magnitude && lines){
             ctx.drawImage(image, canvas.width/2, canvas.height/2, canvas.width/2, canvas.height/2);
+            console.log(lines)
+            for(let i=0; i<lines.length; i++){
+                ctx.beginPath();
+                ctx.moveTo(canvas.width/2 + lines[i][0], canvas.height/2 + lines[i][1]);
+                ctx.lineTo(canvas.width/2 + lines[i][2], canvas.height/2 + lines[i][3]);
+                ctx.stroke();
+            }
         }
     }, [lines])
 

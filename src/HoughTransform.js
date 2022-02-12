@@ -96,9 +96,9 @@ const dsu = (arr1, arr2) => arr1
   .sort(([arg1], [arg2]) => arg2 - arg1) // sort by the args
   .map(([, item]) => item); // extract the sorted items
 
-export const calculate_lines = (accumulator, N_lines, N_rho, N_theta) => {
-    let height = accumulator.length;
-    let width = accumulator[0].length;
+export const calculate_lines = (accumulator, magnitude, N_lines, N_rho, N_theta) => {
+    let height = magnitude.length;
+    let width = magnitude[0].length;
 
     let hyp = Math.round(Math.sqrt(height * height + width * width));
 
@@ -118,11 +118,11 @@ export const calculate_lines = (accumulator, N_lines, N_rho, N_theta) => {
         sorted_index_arr = sorted_index_arr.slice(-N_lines);
     
     let lines = [];
+    let t = 200;
     for(let i=0; i<N_lines; i++){
         let rho = rho_arr[sorted_index_arr[i][0]];
         let theta = theta_arr[sorted_index_arr[i][1]];
 
-        let t = 100;
         let a = Math.cos(theta);
         let b = Math.sin(theta);
 
