@@ -14,7 +14,6 @@ const linspace = (start, end, N) => {
 export const find_local_max = arr => {
     let height = arr.length;
     let width = arr[0].length;
-    console.log(height*width)
 
     let index_arr = [];
     let value_arr = [];
@@ -114,8 +113,11 @@ export const calculate_lines = (accumulator, magnitude, N_lines, N_rho, N_theta)
     let sorted_index_arr = dsu(index_arr, value_arr)
     console.timeEnd("Sort")
 
+
+    console.log(accumulator[sorted_index_arr[3][0]][sorted_index_arr[3][1]])
     if(N_lines< sorted_index_arr.length)
-        sorted_index_arr = sorted_index_arr.slice(-N_lines);
+        sorted_index_arr = sorted_index_arr.slice(0, N_lines);
+
     
     let lines = [];
     let t = 200;
