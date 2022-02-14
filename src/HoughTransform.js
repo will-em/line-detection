@@ -1,4 +1,4 @@
-import { number } from 'mathjs';
+import { number, sort } from 'mathjs';
 import {norm256} from './HelperFunctions'
 const linspace = (start, end, N) => {
     let res = Array(N);
@@ -86,7 +86,6 @@ export const get_accumulator = (arr, magnitude, N_rho, N_theta) => {
         }
     }
 
-    norm256(acc);
     return acc;
 }
 
@@ -114,13 +113,12 @@ export const calculate_lines = (accumulator, magnitude, N_lines, N_rho, N_theta)
     console.timeEnd("Sort")
 
 
-    console.log(accumulator[sorted_index_arr[3][0]][sorted_index_arr[3][1]])
     if(N_lines< sorted_index_arr.length)
         sorted_index_arr = sorted_index_arr.slice(0, N_lines);
 
-    
+    console.log(accumulator[sorted_index_arr[0][0]][sorted_index_arr[0][1]])
     let lines = [];
-    let t = 200;
+    let t = 500;
     for(let i=0; i<N_lines; i++){
         let rho = rho_arr[sorted_index_arr[i][0]];
         let theta = theta_arr[sorted_index_arr[i][1]];

@@ -97,17 +97,19 @@ function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t})
             let imageData = ctx.getImageData(0, canvas.height/2, canvas.width/2, canvas.height/2);
 
             console.time("Accumulator")
-            const accumulator = get_accumulator(hystImage, magnitude, N_rho, N_theta);
+            const accumulator = get_accumulator(hystImage, magnitude, hystImage.length, hystImage[0].length);
+            //const accumulator = get_accumulator(hystImage, magnitude, N_rho, N_theta);
             console.timeEnd("Accumulator")
+            let line_arr = calculate_lines(accumulator, magnitude, 20, hystImage.length, hystImage[0].length);
+            //let line_arr = calculate_lines(accumulator, magnitude, 5, N_rho, N_theta);
+            setLines(line_arr);
 
+            norm256(accumulator);
             let accumulatorArr = flatten(accumulator);
             grayscale_arr_to_image(accumulatorArr, imageData);
 
             ctx.putImageData(imageData, 0, canvas.height/2);
 
-            let line_arr = calculate_lines(accumulator, magnitude, 20, N_rho, N_theta);
-
-            setLines(line_arr);
         }
     }, [hystImage])
 
