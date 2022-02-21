@@ -12,3 +12,4 @@ All Image-processing is implemented <ins>from scratch</ins> using JavaScript arr
 2. Get image data from file upload, solve cross-origin issues :white_check_mark:
 3. Interpolate accumulator image
 4. Speed up blurring by filtering in the frequency domain, i.e implement FFT
+5. Implement the [Generalized Hough Transform](https://en.wikipedia.org/wiki/Generalised_Hough_transform) to allow for detection of arbitrarily shaped features
