@@ -6,9 +6,9 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
 function App() {
-  const [variance, setVariance] = useState(1);
-  const [low_t, setLow_t] = useState(20);
-  const [high_t, setHigh_t] = useState(30);
+  const [variance, setVariance] = useState(2.35);
+  const [low_t, setLow_t] = useState(40);
+  const [high_t, setHigh_t] = useState(115);
   const [image, setImage] = useState(null);
   const [generate, setGenerate] = useState(false);
 

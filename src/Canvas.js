@@ -32,7 +32,7 @@ function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t})
     useEffect(() => {
         if(!uploadedImage){
             var imageObj = new Image();
-            imageObj.src = require('./Images/stockholm.jpeg'); 
+            imageObj.src = require('./Images/building.jpeg'); 
             imageObj.onload = () => setImage(imageObj);
         }
     }, []);
@@ -96,7 +96,7 @@ function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t})
             console.time("Accumulator")
             const accumulator = get_accumulator(hystImage, magnitude, hystImage.length, hystImage[0].length);
             console.timeEnd("Accumulator")
-            let line_arr = calculate_lines(accumulator, magnitude, 5, hystImage.length, hystImage[0].length);
+            let line_arr = calculate_lines(accumulator, magnitude, 8, hystImage.length, hystImage[0].length);
             setLines(line_arr);
 
             norm256(accumulator);
