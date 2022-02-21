@@ -134,6 +134,8 @@ export const calculate_lines = (accumulator, magnitude, N_lines, N_rho, N_theta)
         let x2 = Math.round(x0 + t * b) + width / 2;
         let y2 = -Math.round(y0 - t * a) + height / 2;
 
+        // (-t*b + x0 + width/2)
+
         lines.push([x1, y1, x2, y2]);
     }
 

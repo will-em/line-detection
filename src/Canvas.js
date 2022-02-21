@@ -29,9 +29,6 @@ function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t})
     const canvasRef = useRef(null);
     const dim = useWindowSize();
 
-    const N_rho = 1000;
-    const N_theta = 1000;
-
     useEffect(() => {
         if(!uploadedImage){
             var imageObj = new Image();
@@ -98,10 +95,8 @@ function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t})
 
             console.time("Accumulator")
             const accumulator = get_accumulator(hystImage, magnitude, hystImage.length, hystImage[0].length);
-            //const accumulator = get_accumulator(hystImage, magnitude, N_rho, N_theta);
             console.timeEnd("Accumulator")
-            let line_arr = calculate_lines(accumulator, magnitude, 20, hystImage.length, hystImage[0].length);
-            //let line_arr = calculate_lines(accumulator, magnitude, 5, N_rho, N_theta);
+            let line_arr = calculate_lines(accumulator, magnitude, 5, hystImage.length, hystImage[0].length);
             setLines(line_arr);
 
             norm256(accumulator);
@@ -116,12 +111,21 @@ function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t})
     useEffect(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
-        ctx.strokeStyle = "#FF0000";
         if(image && canvas && hystImage && magnitude && lines){
             ctx.drawImage(image, canvas.width/2, canvas.height/2, canvas.width/2, canvas.height/2);
+            ctx.rect(canvas.width/2, canvas.height/2, canvas.width, canvas.height);
+            ctx.clip();
             console.log(lines)
             for(let i=0; i<lines.length; i++){
                 ctx.beginPath();
+                ctx.strokeStyle = "black";
+                ctx.lineWidth = 5.0;
+                ctx.moveTo(canvas.width/2 + lines[i][0], canvas.height/2 + lines[i][1]);
+                ctx.lineTo(canvas.width/2 + lines[i][2], canvas.height/2 + lines[i][3]);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.strokeStyle = "red";
+                ctx.lineWidth = 3.0;
                 ctx.moveTo(canvas.width/2 + lines[i][0], canvas.height/2 + lines[i][1]);
                 ctx.lineTo(canvas.width/2 + lines[i][2], canvas.height/2 + lines[i][3]);
                 ctx.stroke();
