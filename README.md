@@ -4,7 +4,7 @@ A web app that allows users to find edges and lines in their uploaded images.
 
 All Image-processing is implemented <ins>from scratch</ins> using JavaScript arrays, including the multi-stage [Canny edge detector](https://en.wikipedia.org/wiki/Canny_edge_detector) and the [Hough Transform](https://en.wikipedia.org/wiki/Hough_transform). ReactJS is used for state management. 
 
-### [Click here](https://will-em.github.io/line-detection/) to try it for yourself!
+### [Try it yourself!](https://will-em.github.io/line-detection/) 
 ![Progress image](images/website.png)
 
 ## Todo
