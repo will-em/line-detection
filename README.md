@@ -13,16 +13,17 @@ If you want to run this app locally, start by cloning the repository by simply r
 git clone https://github.com/will-em/line-detection.git
 cd line-detection 
 ```
-Assuming npm is installed you can run the following
+Assuming npm is installed you can run the following 
 ```sh
-    npm install 
-    npm run start 
+npm install 
+npm run start 
 ```
 or alternatively using yarn
 ```sh
-    yarn install 
-    yarn start 
+yarn install 
+yarn start 
 ```
+This will install the required dependencies and host the app locally at http://localhost:3000/line-detection
 
 ## Todo
 1. Dynamically size gaussian kernel with variance by truncating elements lower than a fixed amount :white_check_mark:
