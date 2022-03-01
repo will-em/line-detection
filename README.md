@@ -7,6 +7,12 @@ All Image-processing is implemented <ins>from scratch</ins> using JavaScript arr
 ### [Try it yourself!](https://will-em.github.io/line-detection/) 
 ![Progress image](images/website.png)
 
+## How to run & build
+If you want to run this app locally, assuming npm or yarn is installed, you simply run,
+```shell
+TEST
+```
+
 ## Todo
 1. Dynamically size gaussian kernel with variance by truncating elements lower than a fixed amount :white_check_mark:
 2. Get image data from file upload, solve cross-origin issues :white_check_mark:
