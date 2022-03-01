@@ -9,8 +9,9 @@ All Image-processing is implemented <ins>from scratch</ins> using JavaScript arr
 
 ## How to run & build
 If you want to run this app locally, assuming npm or yarn is installed, you simply run,
-```shell
-TEST
+```console
+    npm install # To install dependencies
+    npm run start 
 ```
 
 ## Todo
