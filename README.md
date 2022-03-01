@@ -25,6 +25,15 @@ yarn start
 ```
 This will install the required dependencies and host the app locally at http://localhost:3000/line-detection
 
+If you want to build the app you simply run
+```sh
+npm run build
+```
+or
+
+```sh
+yarn build
+```
 ## Todo
 1. Dynamically size gaussian kernel with variance by truncating elements lower than a fixed amount :white_check_mark:
 2. Get image data from file upload, solve cross-origin issues :white_check_mark:
