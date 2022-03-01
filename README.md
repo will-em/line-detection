@@ -25,11 +25,11 @@ yarn start
 ```
 This will install the required dependencies and host the app locally at http://localhost:3000/line-detection
 
-If you want to build the app you simply run
+If you later want to build it you can simply run
 ```sh
 npm run build
 ```
-or
+or alternatively using yarn
 
 ```sh
 yarn build
