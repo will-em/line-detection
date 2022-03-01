@@ -8,13 +8,17 @@ All Image-processing is implemented <ins>from scratch</ins> using JavaScript arr
 ![Progress image](images/website.png)
 
 ## How to run & build
-If you want to run this app locally, assuming npm or yarn is installed, you simply run,
+If you want to run this app locally, start by cloning the repository by simply running
 ```sh
-npx create-react-app my-app
-cd my-app
-npm start
+git clone https://github.com/will-em/line-detection.git
+cd line-detection 
 ```
-or alternatively using yarn,
+Assuming npm is installed you can run the following
+```sh
+    npm install 
+    npm run start 
+```
+or alternatively using yarn
 ```sh
     yarn install 
     yarn start 
