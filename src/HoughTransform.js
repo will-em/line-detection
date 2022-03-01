@@ -1,5 +1,3 @@
-import { number, sort } from 'mathjs';
-import {norm256} from './HelperFunctions'
 const linspace = (start, end, N) => {
     let res = Array(N);
 
