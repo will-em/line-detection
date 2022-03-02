@@ -8,7 +8,7 @@ All Image-processing is implemented <ins>from scratch</ins> using JavaScript arr
 ![Progress image](images/website.png)
 
 ## How to run & build
-If you want to run this app locally, start by cloning the repository by simply running
+If you want to run this app locally, start by cloning the repository by running
 ```sh
 git clone https://github.com/will-em/line-detection.git
 cd line-detection 
