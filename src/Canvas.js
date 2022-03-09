@@ -114,7 +114,6 @@ function Canvas({variance, uploadedImage, low_t, high_t}) {
             ctx.drawImage(image, canvas.width/2, canvas.height/2, canvas.width/2, canvas.height/2);
             ctx.rect(canvas.width/2, canvas.height/2, canvas.width, canvas.height);
             ctx.clip();
-            console.log(lines)
             for(let i=0; i<lines.length; i++){
                 ctx.beginPath();
                 ctx.strokeStyle = "black";
