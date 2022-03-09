@@ -1,4 +1,4 @@
-# Line detection running in browser 
+# Line detection web app 
 
 A web app that allows users to find edges and lines in their uploaded images. 
 
