@@ -10,7 +10,6 @@ function App() {
   const [low_t, setLow_t] = useState(40);
   const [high_t, setHigh_t] = useState(115);
   const [image, setImage] = useState(null);
-  const [generate, setGenerate] = useState(false);
 
   useEffect(() => {
     if(low_t > high_t)
@@ -33,8 +32,6 @@ function App() {
       <Canvas 
         variance={variance} 
         uploadedImage={image} 
-        generate={generate} 
-        setGenerate={setGenerate}
         low_t={low_t}
         high_t={high_t}
       />
@@ -42,7 +39,6 @@ function App() {
         <VarSlider value={variance} setValue={setVariance} min={0.05} max={5} step={0.05}/>
         <VarSlider value={low_t} setValue={setLow_t} min={1} max={255} step={1}/>
         <VarSlider value={high_t} setValue={setHigh_t} min={1} max={255} step={1} low_t={low_t}/>
-        <Button variant="contained" onClick={() => setGenerate(true)}>Generate</Button>
         <Button variant="contained" component="label">Upload<input type="file" hidden onChange={imageReader}/></Button>
       </Stack>
     </div>

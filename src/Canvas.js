@@ -19,7 +19,7 @@ function useWindowSize() {
 }
 
 
-function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t}) {
+function Canvas({variance, uploadedImage, low_t, high_t}) {
 
     const [image, setImage] = useState(null);
     const [edgeImage, setEdgeImage] = useState(null);
@@ -48,7 +48,6 @@ function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t})
         const canvas = canvasRef.current;
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight - 36.5 - 25;
-        setGenerate(false);
         if(image && canvas){
             const ctx = canvas.getContext('2d');
             ctx.drawImage(image, 0, 0, canvas.width/2, canvas.height/2);
@@ -62,7 +61,7 @@ function Canvas({variance, uploadedImage, generate, setGenerate, low_t, high_t})
             setMagnitude(magnitude);
 
        } 
-    }, [image, variance, generate, dim])
+    }, [image, variance, dim])
 
 
     useEffect(() => {
