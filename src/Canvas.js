@@ -3,7 +3,7 @@ import {image_to_grayscale, grayscale_arr_to_image, array_to_mat, flatten,
     norm256} from './HelperFunctions';
 
 import {edges, hysteris_thresholding} from './CannyEdgeDetection';
-import { get_accumulator, find_local_max, calculate_lines} from './HoughTransform';
+import { get_accumulator, calculate_lines} from './HoughTransform';
 // Custom hook for window size
 function useWindowSize() { 
     const [size, setSize] = useState([0, 0]);
