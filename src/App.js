@@ -36,9 +36,9 @@ function App() {
         high_t={high_t}
       />
       <Stack id="stack" spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-        <VarSlider value={variance} setValue={setVariance} min={0.05} max={5} step={0.05}/>
-        <VarSlider value={low_t} setValue={setLow_t} min={1} max={255} step={1}/>
-        <VarSlider value={high_t} setValue={setHigh_t} min={1} max={255} step={1} low_t={low_t}/>
+        <VarSlider value={variance} setValue={setVariance} min={0.05} max={5} step={0.05} label={"Variance = "}/>
+        <VarSlider value={low_t} setValue={setLow_t} min={1} max={255} step={1} label={"Low threshold = "}/>
+        <VarSlider value={high_t} setValue={setHigh_t} min={1} max={255} step={1} low_t={low_t} label={"High threshold = "}/>
         <Button variant="contained" component="label">Upload<input type="file" hidden onChange={imageReader}/></Button>
       </Stack>
     </div>

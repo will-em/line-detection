@@ -1,7 +1,7 @@
 import React from 'react';
 import Slider from '@mui/material/Slider';
 
-function VarSlider({min, max, step, value, setValue, low_t}) {
+function VarSlider({min, max, step, value, setValue, low_t, label}) {
   
     const handleChange = (event, newValue) => {
         // Make sure the higher threshold is larger than the lower one
@@ -12,7 +12,6 @@ function VarSlider({min, max, step, value, setValue, low_t}) {
             setValue(newValue);
         }
     };
-  
     return (
         <Slider 
         value={value} 
@@ -21,6 +20,7 @@ function VarSlider({min, max, step, value, setValue, low_t}) {
         min={min}
         max={max}
         step={step}
+        valueLabelFormat={label + value}
         />
     );
   }
